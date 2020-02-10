@@ -1,0 +1,122 @@
+import Guide from '~/components/layout/guide'
+import { InlineCode } from '~/components/text/code'
+import Snippet from '~/components/snippet'
+import Caption from '~/components/text/caption'
+import Note from '~/components/text/note'
+import DeploySection from '~/components/guides/deploy-section'
+
+export const meta = {
+  title: 'Create and Deploy Vue.js Forms using Formcarry with ZEIT Now',
+  description:
+    'Migrate from a Next.js app with a custom server to a serverless Next.js app using ZEIT Now routes.',
+  published: '2020-02-10T18:06:39.170Z',
+  authors: ['nusualabuga'],
+  name: 'Vue.js + Formcarry',
+  type: 'app',
+  url: '/guides/vue-js-html-forms-with-formcarry-zeit-now',
+  editUrl: 'pages/guides/vue-js-html-forms-with-formcarry-zeit-now.mdx',
+  lastEdited: '2020-02-10T18:21:45.000Z'
+}
+
+[Formcarry](https://formcarry.com) provides HTML Form processing for front-end developers and designers.
+
+In this guide, you will discover how to process a simple contact form on your Vue.js project using [Formcarry](https://formcarry.com) and then deploy your project with [ZEIT Now](/).
+
+Before getting started, sign up for a free [ZEIT](/signup) account and a [Formcarry](https://formcarry.com/register) account.
+
+## Step 1: Set Up Your Vue.js Project
+
+Create a Vue.js project using [npm](https://npmjs.org), then move into the directory, with the following command:
+
+<Snippet
+  dark
+  text="npx @vue/cli create my-formcarry-project && cd my-formcarry-project"
+/>
+
+<Note>
+  You will be prompted to pick a preset. You can either choose the default
+  preset which comes with a basic Babel + ESLint setup or select "Manually
+  select features" to pick the features you need.
+</Note>
+
+After the initialization, run the following command to start a local Vue.js development server:
+
+<Snippet dark text="npm run serve" />
+
+## Step 2: Create Your Form on Formcarry
+
+Login to your [Formcarry Dashboard](https://formcarry.com/login), then create a form, then copy your form id to the clipboard. Additionally, you can add your email address to the notification list and get notified for each submission by email.
+
+## Step 3: Create Your First Form Component
+
+Create a `/components/MySweetForm.vue` file with the following contents and replace `{Your-Form-Endpoint}` with the endpoint you have copied in Step 2:
+
+```html
+<template>
+  <div>
+    <form v-if="!status" @submit="sendForm">
+      <input type="email" name="email" v-model="email" required />
+
+      <button type="submit">Send</button>
+    </form>
+
+    <div v-if="status === 'success'">
+      <p>Thank you, we got your submission!</p>
+    </div>
+
+    <div v-if="status === 'error'">
+      <p>Ooops, something terribly went wrong.</p>
+    </div>
+  </div>
+</template>
+
+<script>
+  export default {
+    name: 'MySweetForm',
+    data: function() {
+      return {
+        // success | error
+        status: null,
+        email: null
+      }
+    },
+    methods: {
+      sendForm: function(event) {
+        event.preventDefault()
+
+        fetch('{Your-Form-Endpoint}', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            Accept: 'application/json'
+          },
+          body: JSON.stringify({ email: this.email })
+        })
+          .then(response => response.json())
+          .then(response => {
+            if (response.code === 200) {
+              this.status = 'success'
+            } else {
+              // formcarry error
+              this.status = 'error'
+            }
+          })
+          // network error
+          .catch(() => (this.status = 'error'))
+      }
+    }
+  }
+</script>
+```
+
+That's all you need!
+
+## Step 3: Deploy With ZEIT Now
+
+<DeploySection meta={meta} />
+
+export default ({ children }) => <Guide meta={meta}>{children}</Guide>
+
+export const config = {
+  amp: 'hybrid'
+}
