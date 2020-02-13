@@ -1,5 +1,14 @@
 [
   {
+    "title": "Monitor performance with Calibre and ZEIT Now",
+    "description": "Receive performance reports directly in your GitHub Pull Requests, following a ZEIT Now deploy.",
+    "published": "2020-02-12T03:50:35Z",
+    "authors": ["thefoxis"],
+    "url": "/guides/monitoring-performance-with-calibre-and-zeit-now",
+    "editUrl": "pages/guides/monitoring-performance-with-calibre-and-zeit-now.mdx",
+    "lastEdited": "2020-02-12T03:50:35Z"
+  },
+  {
     "title": "Deploy Scully with ZEIT Now",
     "description": "Create a Scully app and deploy it live with ZEIT Now.",
     "published": "2020-01-13T12:00:00.860Z",
