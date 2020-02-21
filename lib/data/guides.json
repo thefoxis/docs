@@ -1,7 +1,7 @@
 [
   {
     "title": "Monitor performance with Calibre and ZEIT Now",
-    "description": "Receive performance reports directly in your GitHub Pull Requests, following a ZEIT Now deploy.",
+    "description": "Receive performance reports directly in your GitHub Pull Requests, following a ZEIT Now deployment.",
     "published": "2020-02-12T03:50:35Z",
     "authors": ["thefoxis"],
     "url": "/guides/monitoring-performance-with-calibre-and-zeit-now",
